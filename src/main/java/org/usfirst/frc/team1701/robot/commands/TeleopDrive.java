@@ -27,6 +27,7 @@ public class TeleopDrive extends Command {
     double hInput = checkDeadZone(OI.drive_FB.getX(), deadConst);
     double tInput = checkDeadZone(OI.drive_T.getX(),deadConst);
     Robot.driveTrain.teleopControl(-1* fBInput, hInput, tInput);
+    Robot.driveTrain.turretControl(checkDeadZone(OI.operator.getX(),deadConst),-1* checkDeadZone(OI.operator.getY(),deadConst));
   }
   protected boolean isFinished() {
     return false;

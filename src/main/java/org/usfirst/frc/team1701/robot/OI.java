@@ -15,7 +15,7 @@ import org.usfirst.frc.team1701.robot.commands.ToggleMecanum;
  */
 public class OI {
 
-  public static Joystick operation;
+  public static Joystick operator;
   public static Joystick drive_FB;
   public static Joystick drive_T;
   public static JoystickButton mecanumSwitch;
@@ -27,7 +27,7 @@ public class OI {
     /*
      * Enable the physical joysticks.
      */
-    operation = new Joystick(0);
+    operator = new Joystick(0);
     drive_FB = new Joystick(1);
     drive_T = new Joystick(2);
     /*

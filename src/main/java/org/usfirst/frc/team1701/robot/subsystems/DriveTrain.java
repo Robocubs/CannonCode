@@ -107,6 +107,10 @@ public class DriveTrain extends PIDSubsystem {
       RobotMap.differentialDrive.arcadeDrive(forwardsBackwardsAxis,turningAxis);
     }
   }
+  public void turretControl(double x, double y) {
+    RobotMap._turretX.set(x);
+    RobotMap._turretY.set(y);
+  }
   /**
    * Initialize the default command for this subsystem.
    */

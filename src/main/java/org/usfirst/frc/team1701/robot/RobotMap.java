@@ -22,6 +22,8 @@ public class RobotMap {
   public static WPI_TalonSRX _rearLeftMotor;
   public static WPI_TalonSRX _frontRightMotor;
   public static WPI_TalonSRX _rearRightMotor;
+  public static WPI_TalonSRX _turretX;
+  public static WPI_TalonSRX _turretY;
   public static SpeedControllerGroup _leftMotors;
   public static SpeedControllerGroup _rightMotors;
   public static DifferentialDrive differentialDrive;
@@ -37,7 +39,8 @@ public class RobotMap {
     _rearLeftMotor = new WPI_TalonSRX(8);
     _frontRightMotor = new WPI_TalonSRX(5);
     _rearRightMotor = new WPI_TalonSRX(3);
-
+    _turretX = new WPI_TalonSRX(2);
+    _turretY = new WPI_TalonSRX(1);
     /**
      * Encoder PID index.
      * @value 0 for primary closed-loop, 1 for cascaded closed-loop.
