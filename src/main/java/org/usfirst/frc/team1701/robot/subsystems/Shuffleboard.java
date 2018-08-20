@@ -9,7 +9,8 @@ package org.usfirst.frc.team1701.robot.subsystems;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team1701.robot.OI;
+import org.usfirst.frc.team1701.robot.Stabilization;
+import org.usfirst.frc.team1701.robot.controls.OI;
 import org.usfirst.frc.team1701.robot.Robot;
 import org.usfirst.frc.team1701.robot.RobotMap;
 public class Shuffleboard {
@@ -34,17 +35,15 @@ public class Shuffleboard {
         goal.addDefault("Defualt Autonomous", 1);
         SmartDashboard.putData("Autonomous Chooser",goal);
 
-        /*
-         * Shuffleboard elements to be updated during teleop period
-         */
-        SmartDashboard.putBoolean("Mecanum Mode", false);
-        SmartDashboard.putBoolean("Field Oriented", false);
     }
     /**
      * Method called during teleop to update shuffleboard elements live
      */
     public static void updateDashboard() {
+        SmartDashboard.putNumber("Angle", Robot.driveTrain.getNavxAngle());
         SmartDashboard.putBoolean("Mecanum Mode", Robot.driveTrain.isMecanum());
         SmartDashboard.putBoolean("Field Oriented", Robot.driveTrain.getFieldOrientation());
+        SmartDashboard.putBoolean("StableZ", Stabilization.getInstance().isStabilizationActive());
+        SmartDashboard.putString("PidMode", Robot.driveTrain.mPidMode.toString());
     }
 }

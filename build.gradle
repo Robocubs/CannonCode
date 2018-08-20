@@ -3,7 +3,6 @@ plugins {
     id "eclipse"
     id "idea"
     id "jaci.openrio.gradle.GradleRIO" version "2018.03.06"
-    id "com.snobot.simulator.plugin.SnobotSimulatorPlugin" version "2018.05.23"
 }
 
 def TEAM = 1701
@@ -30,8 +29,6 @@ dependencies {
     compile wpilib()
     compile ctre()
     compile navx()
-    testCompile snobotSimCompile()
-    testCompile snobotSimJavaCompile()
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')

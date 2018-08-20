@@ -8,7 +8,8 @@
 package org.usfirst.frc.team1701.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team1701.robot.OI;
+import org.usfirst.frc.team1701.robot.Stabilization;
+import org.usfirst.frc.team1701.robot.controls.OI;
 import org.usfirst.frc.team1701.robot.Robot;
 import org.usfirst.frc.team1701.robot.subsystems.Shuffleboard;
 
@@ -19,6 +20,7 @@ public class TeleopDrive extends Command {
   protected void initialize() {
    Robot.driveTrain.stopPID();
    Robot.driveTrain.setCoastMode();
+   Stabilization.getInstance().reset();
   }
   protected void execute() {
     Shuffleboard.updateDashboard();
@@ -27,7 +29,7 @@ public class TeleopDrive extends Command {
     double hInput = checkDeadZone(OI.drive_FB.getX(), deadConst);
     double tInput = checkDeadZone(OI.drive_T.getX(),deadConst);
     Robot.driveTrain.teleopControl(-1* fBInput, hInput, tInput);
-    Robot.driveTrain.turretControl(checkDeadZone(OI.operator.getX(),deadConst),-1* checkDeadZone(OI.operator.getY(),deadConst));
+    Stabilization.getInstance().stabilizeZ(tInput);
   }
   protected boolean isFinished() {
     return false;
