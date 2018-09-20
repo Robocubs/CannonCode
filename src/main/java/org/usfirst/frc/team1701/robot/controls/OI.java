@@ -8,10 +8,7 @@
 package org.usfirst.frc.team1701.robot.controls;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team1701.robot.commands.Center;
-import org.usfirst.frc.team1701.robot.commands.ToggleFieldOrientation;
-import org.usfirst.frc.team1701.robot.commands.ToggleMecanum;
-import org.usfirst.frc.team1701.robot.commands.ToggleZStable;
+import org.usfirst.frc.team1701.robot.commands.*;
 
 /*
  * This class sets up and enables the Joysticks and Buttons on your console.
@@ -24,6 +21,12 @@ public class OI {
   public static JoystickButton mecanumSwitch;
   public static JoystickButton fieldOr;
   public static JoystickButton center;
+  public static JoystickButton turretR;
+  public static JoystickButton turretL;
+  public static JoystickButton turretU;
+  public static JoystickButton turretD;
+  public static JoystickButton toggleShoot;
+  public static JoystickButton AutoShoot;
   /**
    * Instead of an init() function, we call this on OI startup.
    */
@@ -43,5 +46,14 @@ public class OI {
     fieldOr.whenPressed(new ToggleFieldOrientation());
     center = new JoystickButton(drive_FB,5);
     center.whenPressed(new ToggleZStable());
+    turretR = new JoystickButton(operation,3);
+    turretL = new JoystickButton(operation,10);
+    turretU = new JoystickButton(operation,7);
+    turretD = new JoystickButton(operation,13);
+    toggleShoot = new JoystickButton(operation,2);
+    toggleShoot.whenPressed(new ToggleShoot());
+    AutoShoot  = new JoystickButton(operation,4);
+    AutoShoot.whenPressed(new AutoShoot());
+
   }
 }

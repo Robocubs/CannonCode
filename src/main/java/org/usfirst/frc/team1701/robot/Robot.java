@@ -6,9 +6,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team1701.robot.commands.AutoCommandGroup;
 import org.usfirst.frc.team1701.robot.controls.OI;
-import org.usfirst.frc.team1701.robot.states.Failsafe;
 import org.usfirst.frc.team1701.robot.states.PIDState;
 import org.usfirst.frc.team1701.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team1701.robot.subsystems.LED;
 import org.usfirst.frc.team1701.robot.subsystems.Shuffleboard;
 import org.usfirst.frc.team1701.robot.subsystems.Vision;
 
@@ -27,17 +27,23 @@ public class Robot extends IterativeRobot {
     public static OI oi;
     public static DriveTrain driveTrain;
     public static Vision vision;
-    public static Shuffleboard shuffleboard;
-    public static Failsafe centerFS;
+    public static LED led;
     @Override
     public void robotInit() {
-        DriverStation.reportWarning("Initializing Robot", true);
+        /*
+        Create and setup all devices, like motor controllers, connected to the roboRIO
+         */
         RobotMap.init();
-        Shuffleboard.init();
+        /*
+        Initialize all subsystems for parts of the robot
+         */
         driveTrain = new DriveTrain();
         vision = new Vision();
         oi = new OI();
-        centerFS = new Failsafe();
+        led = new LED();
+        /*
+        Reset gyroscope to face front of robot, or starting position
+         */
         driveTrain.setPIDMode(PIDState.mode.disabled);
         Stabilization.getInstance().reset();
     }

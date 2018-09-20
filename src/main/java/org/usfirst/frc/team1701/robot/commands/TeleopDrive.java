@@ -8,10 +8,12 @@
 package org.usfirst.frc.team1701.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team1701.robot.RobotMap;
 import org.usfirst.frc.team1701.robot.Stabilization;
 import org.usfirst.frc.team1701.robot.controls.OI;
 import org.usfirst.frc.team1701.robot.Robot;
 import org.usfirst.frc.team1701.robot.subsystems.Shuffleboard;
+import org.usfirst.frc.team1701.robot.util.TwoPhaseDigitalStick;
 
 public class TeleopDrive extends Command {
   public TeleopDrive() {
@@ -28,8 +30,10 @@ public class TeleopDrive extends Command {
     double fBInput = checkDeadZone(OI.drive_FB.getY(), deadConst);
     double hInput = checkDeadZone(OI.drive_FB.getX(), deadConst);
     double tInput = checkDeadZone(OI.drive_T.getX(),deadConst);
-    Robot.driveTrain.teleopControl(-1* fBInput, hInput, tInput);
-    Stabilization.getInstance().stabilizeZ(tInput);
+    Robot.driveTrain.teleopControl(-1* fBInput, hInput*-1, -1*tInput);
+    RobotMap._turretTilt.set(TwoPhaseDigitalStick.getAnalogValue(OI.turretD, OI.turretU));
+    RobotMap._turretRotate.set(TwoPhaseDigitalStick.getAnalogValue(OI.turretR,OI.turretL));
+    //Stabilization.getInstance().stabilizeZ(tInput);
   }
   protected boolean isFinished() {
     return false;

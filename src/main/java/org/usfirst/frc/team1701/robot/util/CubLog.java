@@ -1,3 +1,10 @@
+/**
+ * RobotMap.java
+ *
+ * @author Noah Husby
+ * @since 9/20/2018
+ * @license BSD-3-Clause
+ */
 package org.usfirst.frc.team1701.robot.util;
 
 import edu.wpi.first.wpilibj.DriverStation;

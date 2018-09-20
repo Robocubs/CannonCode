@@ -38,13 +38,6 @@ public class DriveTrain extends PIDSubsystem {
    */
   private boolean mMecanumDrive = true;
   private boolean fieldOrientation = true;
-  private double last_world_linear_accel_x;
-  private double last_world_linear_accel_y;
-  public boolean collision = false;
-  public double currentCollisionTime = 0;
-  private final static double kCollisionThreshold_DeltaG = 1f;
-  private double currentJerkX;
-  private double currentJerkY;
 
   public PIDState.mode mPidMode;
   private double mTeleopPIDturn = 0;
@@ -94,7 +87,7 @@ public class DriveTrain extends PIDSubsystem {
    */
   public double getNavxAngle()
   {
-    return -navx.getAngle();
+    return navx.getAngle();
   }
   /**
    * Initialize teleoperated control.
@@ -249,44 +242,4 @@ public class DriveTrain extends PIDSubsystem {
     navx.zeroYaw();
   }
 
-  public void center() {
-    setMecanumDrive();
-    Stabilization.getInstance().disableZStabilization();
-    this.setSetpoint(0);
-    this.startPID();
-    while(!this.onTarget()) {
-      //Wait
-    }
-    this.stopPID();
-    Stabilization.getInstance().enableZStabilization(true);
-    DriverStation.reportError("Waited Done!", true);
-  }
-
-  public double getCurrentJerkX() {
-    return this.currentJerkX;
-  }
-
-  public double getCurrentJerkY() {
-    return this.currentJerkY;
-  }
-
-  public boolean getDetection() {
-    double curr_world_linear_accel_x = navx.getWorldLinearAccelX();
-    currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
-    last_world_linear_accel_x = curr_world_linear_accel_x;
-    double curr_world_linear_accel_y = navx.getWorldLinearAccelY();
-    currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
-
-    last_world_linear_accel_y = curr_world_linear_accel_y;
-
-    if ( ( Math.abs(currentJerkX) > kCollisionThreshold_DeltaG ) ||
-            ( Math.abs(currentJerkY) > kCollisionThreshold_DeltaG) ) {
-      if(Math.abs(OI.drive_FB.getX()) < 0.05 || Math.abs(OI.drive_FB.getY()) < 0.05) {
-        currentCollisionTime = Timer.getFPGATimestamp();
-        return true;
-      }
-    }
-
-    return false;
-  }
 }
