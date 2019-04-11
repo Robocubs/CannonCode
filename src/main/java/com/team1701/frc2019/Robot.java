@@ -6,13 +6,14 @@ import com.team1701.lib.CubRobot;
 import com.team1701.lib.drivetrain.CubDriveHelper;
 import com.team1701.lib.loops.Looper;
 import com.team1701.lib.util.ButtonFeed;
+import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Arrays;
 
 /** @noinspection WeakerAccess, WeakerAccess */
-public class Robot extends CubRobot {
+public class Robot extends TimedRobot {
     /**
      *   _____   ________  ________    _____
      *  / __  \ |\_____  \|\   __  \  / __  \
@@ -32,14 +33,15 @@ public class Robot extends CubRobot {
     private final IControlBoard mControls = Controls.getControls();
     private final CubDriveHelper mDriveHelper = new CubDriveHelper();
 
-    private final ButtonFeed mShoot = new ButtonFeed();
+    private boolean shootBool;
 
     private final Looper mEnabledLoop = new Looper();
     private final Looper mDisabledLoop = new Looper();
     private final SubsystemManager mSubsystemManager = new SubsystemManager(
         Arrays.asList(
                 mDrive,
-                mHardware
+                mHardware,
+                mTurret
         )
     );
 
@@ -85,14 +87,17 @@ public class Robot extends CubRobot {
 
     @Override
     public void teleopPeriodic() {
+        Scheduler.getInstance().run();
         Drive.getInstance().setOpenLoop(mDriveHelper.driveCartesian(-mControls.getOmni(), mControls.getThrottle(),
                 -mControls.getRotation(), 0, 0, 0));
 
         mTurret.setOpenLoop(mControls.getPan(), mControls.getTilt());
 
-        if(mShoot.state(Controls.getControls().shoot())) {
-            mShoot.feedout();
+        if(Controls.getControls().shoot() && !shootBool) {
+            shootBool = true;
             mTurret.shoot();
+        } else if(!Controls.getControls().shoot()) {
+            shootBool = false;
         }
     }
 

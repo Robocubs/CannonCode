@@ -52,12 +52,12 @@ public class MainControlBoard implements IControlBoard {
 
     @Override
     public double getTilt() {
-        return kOperatorControler.getRawAxis(1);
+        return -kOperatorControler.getRawAxis(3);
     }
 
     @Override
     public boolean shoot() {
-        return kOperatorControler.getRawButton(0);
+        return kOperatorControler.getRawButton(1);
     }
 
 }

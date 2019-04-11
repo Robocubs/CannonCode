@@ -9,6 +9,7 @@ import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Turret extends Subsystem {
 
@@ -57,12 +58,18 @@ public class Turret extends Subsystem {
         mPanMaster = TalonSRXFactory.createDefaultTalon(Constants.kTurretPanID);
         mTiltMaster = TalonSRXFactory.createDefaultTalon(Constants.kTurretTiltID);
 
-        c1 = new Solenoid(0,2);
-        c2 = new Solenoid(0,3);
-        c3 = new Solenoid(0,4);
-        c4 = new Solenoid(0,5);
-        c5 = new Solenoid(0,6);
-        c6 = new Solenoid(0,7);
+        c1 = new Solenoid(1,0);
+        c1.setPulseDuration(1000);
+        c2 = new Solenoid(1,1);
+        c2.setPulseDuration(1000);
+        c3 = new Solenoid(1,2);
+        c3.setPulseDuration(1000);
+        c4 = new Solenoid(1,3);
+        c4.setPulseDuration(1000);
+        c5 = new Solenoid(1,4);
+        c5.setPulseDuration(1000);
+        c6 = new Solenoid(1,5);
+        c6.setPulseDuration(1000);
     }
 
     @Override
@@ -73,39 +80,33 @@ public class Turret extends Subsystem {
 
     @Override
     public void outputTelemetry() {
-
+        SmartDashboard.putString("CANNON", mBarrel.name());
     }
 
     public void shoot() {
         switch(mBarrel) {
             case ONE:
-                c6.set(false);
-                c1.set(true);
+                c1.startPulse();
                 mBarrel = CurrentBarrel.TWO;
                 break;
             case TWO:
-                c1.set(false);
-                c2.set(true);
+                c2.startPulse();
                 mBarrel = CurrentBarrel.THREE;
                 break;
             case THREE:
-                c2.set(false);
-                c3.set(true);
+                c3.startPulse();
                 mBarrel = CurrentBarrel.FOUR;
                 break;
             case FOUR:
-                c3.set(false);
-                c4.set(true);
+                c4.startPulse();
                 mBarrel = CurrentBarrel.FIVE;
                 break;
             case FIVE:
-                c4.set(false);
-                c5.set(true);
+                c5.startPulse();
                 mBarrel = CurrentBarrel.SIX;
                 break;
             case SIX:
-                c5.set(false);
-                c6.set(true);
+                c6.startPulse();
                 mBarrel = CurrentBarrel.ONE;
                 break;
         }
