@@ -1,11 +1,44 @@
+# WPILib
+bin/
+build/
+dist/
+sysProps.xml
+workbench.xmi
 # Compiled class file
 *.class
 
+# IDE
+*.ipr
+*.iml
+*.iws
+out/
+tmp/
+.settings/
+.loadpath
+.project
+/.idea
+.classpath
 # Log file
 *.log
 
 # BlueJ files
 *.ctxt
+
+# Toast/GradleRIO
+run/
+.gradle/
+gradle/.launch/
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.AppleDouble
+.LSOverride
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -17,5 +50,24 @@
 *.tar.gz
 *.rar
 
+# IntelliJ Files #
+*.iml
+*.ipr
+*.iws
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Gradle
+.gradle/
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# backup files
+*~
+
+# directory for XML generated after running junit tests through ant
+junit/
