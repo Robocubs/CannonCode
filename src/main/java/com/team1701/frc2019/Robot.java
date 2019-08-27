@@ -27,7 +27,6 @@ public class Robot extends TimedRobot {
      */
 
     private final Drive mDrive = Drive.getInstance();
-    private final Hardware mHardware = Hardware.getInstance();
     private final Turret mTurret = Turret.getInstance();
 
     private final IControlBoard mControls = Controls.getControls();
@@ -40,7 +39,6 @@ public class Robot extends TimedRobot {
     private final SubsystemManager mSubsystemManager = new SubsystemManager(
         Arrays.asList(
                 mDrive,
-                mHardware,
                 mTurret
         )
     );
@@ -88,10 +86,10 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        Drive.getInstance().setOpenLoop(mDriveHelper.driveCartesian(-mControls.getOmni(), mControls.getThrottle(),
-                -mControls.getRotation(), 0, 0, 0));
+        Drive.getInstance().setOpenLoop(mDriveHelper.driveCartesian(mControls.getThrottle(),
+                -mControls.getRotation()));
 
-        mTurret.setOpenLoop(mControls.getPan(), mControls.getTilt());
+        mTurret.setOpenLoop(mControls.getPan());
 
         if(Controls.getControls().shoot() && !shootBool) {
             shootBool = true;

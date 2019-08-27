@@ -76,11 +76,8 @@ public class Drive extends Subsystem {
    * @param signal DriveSignal
    */
   public void setOpenLoop(DriveSignal signal) {
-    mPeriodic.front_left = signal.front_left;
-    mPeriodic.front_right = signal.front_right;
-    mPeriodic.rear_left = signal.rear_left;
-    mPeriodic.rear_right = signal.rear_right;
-
+    mPeriodic.left = signal.left;
+    mPeriodic.right = signal.right;
   }
 
   /**
@@ -100,10 +97,10 @@ public class Drive extends Subsystem {
    */
   @Override
   public synchronized void writePeriodicOutputs() {
-     mRightFrontMaster.set(ControlMode.PercentOutput, mPeriodic.front_right);
-      mLeftFrontMaster.set(ControlMode.PercentOutput, mPeriodic.front_left);
-      mRightRearMaster.set(ControlMode.PercentOutput, mPeriodic.rear_right);
-      mLeftRearMaster.set(ControlMode.PercentOutput, mPeriodic.rear_left);
+     mRightFrontMaster.set(ControlMode.PercentOutput, mPeriodic.right);
+      mLeftFrontMaster.set(ControlMode.PercentOutput, mPeriodic.left);
+      mRightRearMaster.set(ControlMode.PercentOutput, mPeriodic.right);
+      mLeftRearMaster.set(ControlMode.PercentOutput, mPeriodic.left);
 
   }
 
@@ -111,10 +108,8 @@ public class Drive extends Subsystem {
 
 
     // OUTPUTS
-    public double front_right;
-    public double front_left;
-    public double rear_right;
-    public double rear_left;
+    public double left;
+    public double right;
   }
 
 }

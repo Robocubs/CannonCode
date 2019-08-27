@@ -36,11 +36,6 @@ public class MainControlBoard implements IControlBoard {
     }
 
     @Override
-    public double getOmni() {
-        return kDriveController.getRawAxis(0);
-    }
-
-    @Override
     public double getRotation() {
         return kDriveController.getRawAxis(4);
     }
@@ -48,11 +43,6 @@ public class MainControlBoard implements IControlBoard {
     @Override
     public double getPan() {
         return kOperatorControler.getRawAxis(0);
-    }
-
-    @Override
-    public double getTilt() {
-        return -kOperatorControler.getRawAxis(3);
     }
 
     @Override

@@ -8,21 +8,13 @@ package com.team1701.lib.drivetrain;
 
 public class DriveSignal {
 
-    public DriveSignal(double frontLeft, double frontRight, double rearLeft, double rearRight) {
-        this.front_left = frontLeft;
-        this.front_right = frontRight;
-
-        this.rear_left = rearLeft;
-        this.rear_right = rearRight;
-
+    public DriveSignal(double left, double right) {
+        this.left = left;
+        this.right = right;
     }
 
-    public final double front_left;
+    public final double left;
 
-    public final double front_right;
-
-    public final double rear_left;
-
-    public final double rear_right;
+    public final double right;
 
 }

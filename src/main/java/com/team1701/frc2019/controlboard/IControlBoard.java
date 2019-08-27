@@ -13,13 +13,9 @@ package com.team1701.frc2019.controlboard;
 public interface IControlBoard {
     double getThrottle();
 
-    double getOmni();
-
     double getRotation();
 
     double getPan();
-
-    double getTilt();
 
     boolean shoot();
 }

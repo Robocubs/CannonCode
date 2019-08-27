@@ -8,79 +8,60 @@ public class CubDriveHelper {
 
     private double mPowerMultiplier = 0.7;
 
-    public DriveSignal driveCartesian(double ySpeed, double xSpeed, double zRotation, double gyroAngle, double l_strafe,
-                                      double r_strafe) {
+    public DriveSignal driveCartesian(double xSpeed, double zRotation) {
+        xSpeed = limit(xSpeed);
+        xSpeed = applyDeadband(xSpeed);
 
-        /**
-         * Strafe Controls
-         */
-        /**
-        xSpeed += r_strafe;
-        xSpeed -= l_strafe;
-         */
+        zRotation = limit(zRotation);
+        zRotation = applyDeadband(zRotation);
 
-        ySpeed = ySpeed * mPowerMultiplier;
-        xSpeed = xSpeed * mPowerMultiplier;
-        zRotation = zRotation * mPowerMultiplier;
+        double leftMotorOutput;
+        double rightMotorOutput;
 
-        if(ySpeed > 1) {
-            ySpeed = 1;
-        } else if (ySpeed < -1) {
-            ySpeed = -1;
-        }
+        double maxInput = Math.copySign(Math.max(Math.abs(xSpeed), Math.abs(zRotation)), xSpeed);
 
-        if(xSpeed > 1) {
-            xSpeed = 1;
-        } else if(xSpeed < -1) {
-            xSpeed = -1;
-        }
-
-        ySpeed = deadband(ySpeed);
-        xSpeed = deadband(xSpeed);
-        zRotation = deadband(zRotation);
-
-        Vector2d input = new Vector2d(ySpeed, xSpeed);
-        input.rotate(-gyroAngle);
-
-        double[] wheelSpeeds = new double[4];
-        wheelSpeeds[RobotDriveBase.MotorType.kFrontLeft.value] = input.x + input.y + zRotation;
-        wheelSpeeds[RobotDriveBase.MotorType.kFrontRight.value] = -input.x + input.y - zRotation;
-        wheelSpeeds[RobotDriveBase.MotorType.kRearLeft.value] = -input.x + input.y + zRotation;
-        wheelSpeeds[RobotDriveBase.MotorType.kRearRight.value] = input.x + input.y - zRotation;
-
-        double maxMagnitude = Math.abs(wheelSpeeds[0]);
-        for (int i = 1; i < wheelSpeeds.length; i++) {
-            double temp = Math.abs(wheelSpeeds[i]);
-            if (maxMagnitude < temp) {
-                maxMagnitude = temp;
+        if (xSpeed >= 0.0) {
+            // First quadrant, else second quadrant
+            if (zRotation >= 0.0) {
+                leftMotorOutput = maxInput;
+                rightMotorOutput = xSpeed - zRotation;
+            } else {
+                leftMotorOutput = xSpeed + zRotation;
+                rightMotorOutput = maxInput;
+            }
+        } else {
+            // Third quadrant, else fourth quadrant
+            if (zRotation >= 0.0) {
+                leftMotorOutput = xSpeed + zRotation;
+                rightMotorOutput = maxInput;
+            } else {
+                leftMotorOutput = maxInput;
+                rightMotorOutput = xSpeed - zRotation;
             }
         }
-        if (maxMagnitude > 1.0) {
-            for (int i = 0; i < wheelSpeeds.length; i++) {
-                wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
-            }
-        }
-
-        int kMaxOutput = 1;
-        double fL = wheelSpeeds[RobotDriveBase.MotorType.kFrontLeft.value] * kMaxOutput;
-        double m_rightSideInvertMultiplier = -1.0;
-        double fR = wheelSpeeds[RobotDriveBase.MotorType.kFrontRight.value] * kMaxOutput * m_rightSideInvertMultiplier;
-        double rL = wheelSpeeds[RobotDriveBase.MotorType.kRearLeft.value] * kMaxOutput;
-        double rR = wheelSpeeds[RobotDriveBase.MotorType.kRearRight.value] * kMaxOutput * m_rightSideInvertMultiplier;
-
-        return new DriveSignal(fL,fR,rL,rR);
+        return new DriveSignal(limit(leftMotorOutput), limit(rightMotorOutput) * -1);
     }
 
     public void setMultiplierConstant(double mult) {
         this.mPowerMultiplier = mult;
     }
 
-    private double deadband(double speed) {
+    private double applyDeadband(double speed) {
         double kDeadband = 0.09;
         if(Math.abs(speed) < kDeadband) {
             return 0;
         }
 
         return speed;
+    }
+
+    protected double limit(double value) {
+        if (value > 1.0) {
+            return 1.0;
+        }
+        if (value < -1.0) {
+            return -1.0;
+        }
+        return value;
     }
 }
