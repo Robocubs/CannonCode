@@ -17,5 +17,7 @@ public interface IControlBoard {
 
     double getPan();
 
+    double getTilt();
+
     boolean shoot();
 }

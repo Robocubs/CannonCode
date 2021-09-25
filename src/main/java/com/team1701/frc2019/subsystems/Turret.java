@@ -15,7 +15,7 @@ public class Turret extends Subsystem {
 
     private static Turret mInstance = null;
 
-    private final CubTalonSRX mPanMaster;
+    private final CubTalonSRX mPanMaster, mTiltMaster;
     private final Solenoid c1, c2, c3, c4, c5, c6;
     private final PeriodicIO mPeriodic = new PeriodicIO();
 
@@ -29,8 +29,9 @@ public class Turret extends Subsystem {
         return mInstance;
     }
 
-    public void setOpenLoop(double pan) {
+    public void setOpenLoop(double pan, double tilt) {
         mPeriodic.pan_demand = pan;
+        mPeriodic.tilt_demand = tilt;
     }
 
     @Override
@@ -55,6 +56,7 @@ public class Turret extends Subsystem {
 
     private Turret() {
         mPanMaster = TalonSRXFactory.createDefaultTalon(Constants.kTurretPanID);
+        mTiltMaster = TalonSRXFactory.createDefaultTalon(Constants.kTurretTiltID);
 
         c1 = new Solenoid(1,0);
         c1.setPulseDuration(1000);
@@ -73,6 +75,7 @@ public class Turret extends Subsystem {
     @Override
     public void writePeriodicOutputs() {
         mPanMaster.set(ControlMode.PercentOutput, mPeriodic.pan_demand);
+        mTiltMaster.set(ControlMode.PercentOutput, mPeriodic.tilt_demand);
     }
 
     @Override
@@ -113,6 +116,7 @@ public class Turret extends Subsystem {
     public void stop() { }
 
     public class PeriodicIO {
+        public double tilt_demand;
         public double pan_demand;
     }
 

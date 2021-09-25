@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
         Drive.getInstance().setOpenLoop(mDriveHelper.driveCartesian(mControls.getThrottle(),
                 -mControls.getRotation()));
 
-        mTurret.setOpenLoop(mControls.getPan());
+        mTurret.setOpenLoop(mControls.getPan(), mControls.getTilt());
 
         if(Controls.getControls().shoot() && !shootBool) {
             shootBool = true;

@@ -44,7 +44,12 @@ public class MainControlBoard implements IControlBoard {
     public double getPan() {
         return kOperatorControler.getRawAxis(0);
     }
-
+    
+    @Override
+    public double getTilt() {
+        return -kOperatorControler.getRawAxis(3);
+    }
+    
     @Override
     public boolean shoot() {
         return kOperatorControler.getRawButton(1);
