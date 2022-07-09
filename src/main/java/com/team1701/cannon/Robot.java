@@ -1,17 +1,16 @@
 package com.team1701.cannon;
 
+import java.util.Arrays;
+
 import com.team1701.cannon.controlboard.Controls;
 import com.team1701.cannon.controlboard.IControlBoard;
-import com.team1701.cannon.subsystems.*;
-import com.team1701.lib.CubRobot;
+import com.team1701.cannon.subsystems.Drive;
+import com.team1701.cannon.subsystems.Turret;
 import com.team1701.lib.drivetrain.CubDriveHelper;
 import com.team1701.lib.loops.Looper;
-import com.team1701.lib.util.ButtonFeed;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-import java.util.Arrays;
 
 /** @noinspection WeakerAccess, WeakerAccess */
 public class Robot extends TimedRobot {
@@ -77,8 +76,6 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {
         // Set mode to DISABLED on dashboard.
         SmartDashboard.putString("Cycle", "DISABLED");
-        // Run Scheduler.
-        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -86,7 +83,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        CommandScheduler.getInstance().run();
         Drive.getInstance().setOpenLoop(mDriveHelper.driveCartesian(mControls.getThrottle(),
                 -mControls.getRotation()));
 

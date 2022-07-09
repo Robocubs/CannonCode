@@ -8,10 +8,8 @@ import com.team1701.lib.loops.ILooper;
 import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
 
-import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Turret extends Subsystem {

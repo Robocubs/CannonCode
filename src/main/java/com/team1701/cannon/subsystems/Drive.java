@@ -1,18 +1,13 @@
 package com.team1701.cannon.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel;
 import com.team1701.cannon.Constants;
-import com.team1701.lib.drivers.*;
+import com.team1701.lib.drivers.CubTalonSRX;
+import com.team1701.lib.drivers.TalonSRXFactory;
+import com.team1701.lib.drivetrain.DriveSignal;
 import com.team1701.lib.loops.ILooper;
 import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
-import com.team1701.lib.drivetrain.DriveSignal;
-import com.team1701.lib.util.CubLog;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 /**
  * Drive subsystem. Controls drivetrain and steering.
