@@ -1,9 +1,9 @@
-package com.team1701.frc2019.subsystems;
+package com.team1701.cannon.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
-import com.team1701.frc2019.Constants;
+import com.team1701.cannon.Constants;
 import com.team1701.lib.drivers.*;
 import com.team1701.lib.loops.ILooper;
 import com.team1701.lib.loops.Loop;

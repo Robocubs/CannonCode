@@ -5,9 +5,10 @@
  * @since 2018-11-3
  * @license BSD-3-Clause
  */
-package com.team1701.frc2019.controlboard;
+package com.team1701.cannon.controlboard;
 
-import com.team1701.frc2019.Constants;
+import com.team1701.cannon.Constants;
+
 import edu.wpi.first.wpilibj.Joystick;
 
 /**

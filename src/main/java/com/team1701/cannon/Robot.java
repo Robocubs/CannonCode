@@ -1,7 +1,8 @@
-package com.team1701.frc2019;
-import com.team1701.frc2019.controlboard.Controls;
-import com.team1701.frc2019.controlboard.IControlBoard;
-import com.team1701.frc2019.subsystems.*;
+package com.team1701.cannon;
+
+import com.team1701.cannon.controlboard.Controls;
+import com.team1701.cannon.controlboard.IControlBoard;
+import com.team1701.cannon.subsystems.*;
 import com.team1701.lib.CubRobot;
 import com.team1701.lib.drivetrain.CubDriveHelper;
 import com.team1701.lib.loops.Looper;

@@ -1,5 +1,5 @@
-package com.team1701.frc2019;
-import com.team1701.frc2019.controlboard.Controls;
+package com.team1701.cannon;
+import com.team1701.cannon.controlboard.Controls;
 import com.team1701.lib.loops.ILooper;
 import com.team1701.lib.loops.Loop;
 import com.team1701.lib.loops.Looper;

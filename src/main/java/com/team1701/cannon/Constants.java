@@ -1,4 +1,4 @@
-package com.team1701.frc2019;
+package com.team1701.cannon;
 
 /**
  * All values and constants used in the robot code. This class contains PID values and CAN IDs as well.
