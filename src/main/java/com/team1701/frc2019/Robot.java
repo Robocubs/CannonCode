@@ -7,8 +7,8 @@ import com.team1701.lib.drivetrain.CubDriveHelper;
 import com.team1701.lib.loops.Looper;
 import com.team1701.lib.util.ButtonFeed;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import java.util.Arrays;
 
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
         // Set mode to DISABLED on dashboard.
         SmartDashboard.putString("Cycle", "DISABLED");
         // Run Scheduler.
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        Scheduler.getInstance().run();
+        CommandScheduler.getInstance().run();
         Drive.getInstance().setOpenLoop(mDriveHelper.driveCartesian(mControls.getThrottle(),
                 -mControls.getRotation()));
 

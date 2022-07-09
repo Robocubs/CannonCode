@@ -10,7 +10,7 @@ import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
 import com.team1701.lib.drivetrain.DriveSignal;
 import com.team1701.lib.util.CubLog;
-import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 

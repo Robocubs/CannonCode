@@ -7,6 +7,9 @@ import com.team1701.lib.drivers.TalonSRXFactory;
 import com.team1701.lib.loops.ILooper;
 import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
+
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,17 +61,17 @@ public class Turret extends Subsystem {
         mPanMaster = TalonSRXFactory.createDefaultTalon(Constants.kTurretPanID);
         mTiltMaster = TalonSRXFactory.createDefaultTalon(Constants.kTurretTiltID);
 
-        c1 = new Solenoid(1,0);
+        c1 = new Solenoid(1, PneumaticsModuleType.CTREPCM, 0);
         c1.setPulseDuration(1000);
-        c2 = new Solenoid(1,1);
+        c2 = new Solenoid(1, PneumaticsModuleType.CTREPCM, 1);
         c2.setPulseDuration(1000);
-        c3 = new Solenoid(1,2);
+        c3 = new Solenoid(1, PneumaticsModuleType.CTREPCM, 2);
         c3.setPulseDuration(1000);
-        c4 = new Solenoid(1,3);
+        c4 = new Solenoid(1, PneumaticsModuleType.CTREPCM, 3);
         c4.setPulseDuration(1000);
-        c5 = new Solenoid(1,4);
+        c5 = new Solenoid(1, PneumaticsModuleType.CTREPCM, 4);
         c5.setPulseDuration(1000);
-        c6 = new Solenoid(1,5);
+        c6 = new Solenoid(1, PneumaticsModuleType.CTREPCM, 5);
         c6.setPulseDuration(1000);
     }
 
