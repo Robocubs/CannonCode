@@ -8,6 +8,7 @@ import com.team1701.lib.loops.ILooper;
 import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
 
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,7 @@ public class Turret extends Subsystem {
     private final CubTalonSRX mPanMaster, mTiltMaster;
     private final Solenoid c1, c2, c3, c4, c5, c6;
     private final PeriodicIO mPeriodic = new PeriodicIO();
+    private final PneumaticsControlModule mPcm = new PneumaticsControlModule(1);
 
     private CurrentBarrel mBarrel = CurrentBarrel.ONE;
 
@@ -85,6 +87,9 @@ public class Turret extends Subsystem {
     }
 
     public void shoot() {
+        if (mPcm.getSolenoidVoltageStickyFault()) {
+            mPcm.clearAllStickyFaults();
+        }
         switch(mBarrel) {
             case ONE:
                 c1.startPulse();
