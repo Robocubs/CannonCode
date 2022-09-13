@@ -8,6 +8,7 @@ import com.team1701.lib.loops.ILooper;
 import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -21,6 +22,7 @@ public class Turret extends Subsystem {
     private final Solenoid c1, c2, c3, c4, c5, c6;
     private final PeriodicIO mPeriodic = new PeriodicIO();
     private final PneumaticsControlModule mPcm = new PneumaticsControlModule(1);
+    private final DigitalInput limitDown, limitUp;
 
     private CurrentBarrel mBarrel = CurrentBarrel.ONE;
 
@@ -33,8 +35,25 @@ public class Turret extends Subsystem {
     }
 
     public void setOpenLoop(double pan, double tilt) {
+        tilt *= 0.3; 
+        if(tilt>0){
+            if(mPeriodic.limit_up_reached){
+                mPeriodic.tilt_demand = 0;
+            }
+            else{
+                mPeriodic.tilt_demand = tilt;
+            }
+        }
+        if(tilt<0){
+            if(mPeriodic.limit_down_reached){
+                mPeriodic.tilt_demand = 0;
+                
+            }
+            else{
+                mPeriodic.tilt_demand = tilt;
+            }
+        }
         mPeriodic.pan_demand = pan;
-        mPeriodic.tilt_demand = tilt;
     }
 
     @Override
@@ -73,6 +92,15 @@ public class Turret extends Subsystem {
         c5.setPulseDuration(1000);
         c6 = new Solenoid(1, PneumaticsModuleType.CTREPCM, 5);
         c6.setPulseDuration(1000);
+
+        limitDown = new DigitalInput(0);
+        limitUp = new DigitalInput(1);
+    }
+
+    @Override
+    public void readPeriodicInputs() {
+        mPeriodic.limit_down_reached = limitDown.get();
+        mPeriodic.limit_up_reached = limitUp.get();
     }
 
     @Override
@@ -84,6 +112,9 @@ public class Turret extends Subsystem {
     @Override
     public void outputTelemetry() {
         SmartDashboard.putString("CANNON", mBarrel.name());
+
+        SmartDashboard.putBoolean("Limit Switch Down", mPeriodic.limit_down_reached);
+        SmartDashboard.putBoolean("Limit Switch Up", mPeriodic.limit_up_reached);
     }
 
     public void shoot() {
@@ -124,6 +155,8 @@ public class Turret extends Subsystem {
     public class PeriodicIO {
         public double tilt_demand;
         public double pan_demand;
+        public boolean limit_down_reached;
+        public boolean limit_up_reached;
     }
 
     public enum CurrentBarrel {
