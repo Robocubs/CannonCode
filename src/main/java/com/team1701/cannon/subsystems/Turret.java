@@ -36,22 +36,20 @@ public class Turret extends Subsystem {
 
     public void setOpenLoop(double pan, double tilt) {
         tilt *= 0.3; 
-        if(tilt>0){
-            if(mPeriodic.limit_up_reached){
+        if (tilt > 0) {
+            if (mPeriodic.limit_up_reached) {
                 mPeriodic.tilt_demand = 0;
-            }
-            else{
+            } else {
                 mPeriodic.tilt_demand = tilt;
             }
-        }
-        if(tilt<0){
-            if(mPeriodic.limit_down_reached){
+        } else if (tilt < 0) {
+            if (mPeriodic.limit_down_reached) {
                 mPeriodic.tilt_demand = 0;
-                
-            }
-            else{
+            } else {
                 mPeriodic.tilt_demand = tilt;
             }
+        } else {
+            mPeriodic.tilt_demand = 0;
         }
         mPeriodic.pan_demand = pan;
     }
