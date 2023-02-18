@@ -9,10 +9,12 @@ import com.team1701.lib.loops.Loop;
 import com.team1701.lib.subsystem.Subsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class Turret extends Subsystem {
 
@@ -23,6 +25,7 @@ public class Turret extends Subsystem {
     private final PeriodicIO mPeriodic = new PeriodicIO();
     private final PneumaticsControlModule mPcm = new PneumaticsControlModule(1);
     private final DigitalInput limitDown, limitUp;
+    private final DutyCycleEncoder mEncoder;
 
     private CurrentBarrel mBarrel = CurrentBarrel.ONE;
 
@@ -51,7 +54,14 @@ public class Turret extends Subsystem {
         } else {
             mPeriodic.tilt_demand = 0;
         }
-        mPeriodic.pan_demand = pan;
+
+        if (pan>0 && mPeriodic.rotary_encoder<.9){
+            mPeriodic.pan_demand = pan;
+        } else if (pan<0 && mPeriodic.rotary_encoder>.1) {
+            mPeriodic.pan_demand = pan;
+        } else {
+            mPeriodic.pan_demand = 0;
+        }
     }
 
     @Override
@@ -93,12 +103,15 @@ public class Turret extends Subsystem {
 
         limitDown = new DigitalInput(0);
         limitUp = new DigitalInput(1);
+
+        mEncoder = new DutyCycleEncoder(2);
     }
 
     @Override
     public void readPeriodicInputs() {
         mPeriodic.limit_down_reached = limitDown.get();
         mPeriodic.limit_up_reached = limitUp.get();
+        mPeriodic.rotary_encoder = mEncoder.get();
     }
 
     @Override
@@ -113,6 +126,8 @@ public class Turret extends Subsystem {
 
         SmartDashboard.putBoolean("Limit Switch Down", mPeriodic.limit_down_reached);
         SmartDashboard.putBoolean("Limit Switch Up", mPeriodic.limit_up_reached);
+
+        SmartDashboard.putNumber("Rotary Encoder", mPeriodic.rotary_encoder);
     }
 
     public void shoot() {
@@ -155,6 +170,7 @@ public class Turret extends Subsystem {
         public double pan_demand;
         public boolean limit_down_reached;
         public boolean limit_up_reached;
+        public double rotary_encoder;
     }
 
     public enum CurrentBarrel {
