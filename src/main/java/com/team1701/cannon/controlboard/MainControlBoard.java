@@ -48,7 +48,7 @@ public class MainControlBoard implements IControlBoard {
     
     @Override
     public double getTilt() {
-        return -kOperatorControler.getRawAxis(3);
+        return -kOperatorControler.getRawAxis(5);
     }
     
     @Override
